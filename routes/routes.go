@@ -8,8 +8,10 @@ import (
 
 func RegisterAuthRoutes(router *mux.Router) {
     authRouter := router.PathPrefix("/auth").Subrouter()
-    authRouter.HandleFunc("/login", controllers.LoginUser).Methods("POST")
-    authRouter.HandleFunc("/register", controllers.RegisterUser).Methods("POST")
+    authRouter.HandleFunc("/login", controllers.LoginUser).Methods("GET")
+    authRouter.HandleFunc("/register", controllers.RegisterUser).Methods("GET")
+    authRouter.HandleFunc("/microsoft", controllers.InitiateMicrosoftAuth).Methods("GET")
+    authRouter.HandleFunc("/microsoft/callback", controllers.HandleMicrosoftCallback).Methods("GET")
 }
 
 func PostRoutes(router *mux.Router) {

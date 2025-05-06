@@ -8,18 +8,25 @@ import (
 	"social-media-app/routes"
 
 	"github.com/gorilla/mux"
+	"github.com/joho/godotenv"
 )
 
+func init() {
+	if err := godotenv.Load(); err != nil {
+		log.Println("No .env file found")
+	}
+}
+
 func main() {
-    config.LoadConfig()
+	config.LoadConfig()
 
-    database.ConnectDB()
+	database.ConnectDB()
 
-    router := mux.NewRouter()
+	router := mux.NewRouter()
 
-    routes.RegisterAuthRoutes(router)
-    routes.PostRoutes(router)
+	routes.RegisterAuthRoutes(router)
+	routes.PostRoutes(router)
 
-    log.Println("Server is running on port 8080")
-    log.Fatal(http.ListenAndServe(":8080", router))
+	log.Println("Server is running on port 8080")
+	log.Fatal(http.ListenAndServe(":8080", router))
 }
